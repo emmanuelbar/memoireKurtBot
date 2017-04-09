@@ -9,17 +9,23 @@ import fr.crampi.memoirekurt.modele.Politic;
 
 /**
  * Created by crampi on 08/04/17.
+ * 
+ * @param <E>
  */
-public class PoliticDao {
+public class PoliticDao extends AbstractDao<Politic> {
 	private List<Politic> politics;
 
-	@SuppressWarnings("unchecked")
-	public List<Politic> fetchPolitics(Session session) {
+	public PoliticDao(Session s) {
+		politics = list(s);
+		for (Politic politic : politics) {
+			System.out.println(politic.toString());
+		}
+	}
+
+	@Override
+	public List<Politic> list(Session session) {
 		politics = new ArrayList<Politic>();
 		politics = session.createQuery("from Politic").list();
-		for (Politic politic : politics) {
-			System.out.println(politic);
-		}
 		return politics;
 	}
 }

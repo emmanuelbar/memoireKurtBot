@@ -8,8 +8,8 @@ import fr.crampi.memoirekurt.twit.Remember;
 public class Launcher {
 
 	public static void main(String[] args) throws Exception {
-		Remember twitSearch = new Remember();
-		twitSearch.start();
+		Remember remember = new Remember();
+		remember.start();
 		return;
 	}
 

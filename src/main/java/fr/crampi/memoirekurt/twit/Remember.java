@@ -21,9 +21,11 @@ public class Remember {
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			PoliticDao politicDao = new PoliticDao();
 			// retrieve politics in db
-			politics = politicDao.fetchPolitics(session);
+			PoliticDao politicDao = new PoliticDao(session);
+			politics = politicDao.list(session);
+			// retrieve media in db
+
 			session.flush();
 			tx.commit();
 		} finally {
