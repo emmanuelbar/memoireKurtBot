@@ -5,8 +5,10 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import fr.crampi.memoirekurt.dao.MediaDao;
 import fr.crampi.memoirekurt.dao.PoliticDao;
 import fr.crampi.memoirekurt.hibernate.HibernateUtil;
+import fr.crampi.memoirekurt.modele.Media;
 import fr.crampi.memoirekurt.modele.Politic;
 
 /**
@@ -14,18 +16,24 @@ import fr.crampi.memoirekurt.modele.Politic;
  */
 public class Remember {
 	private List<Politic> politics;
+	private List<Media> medias;
 
 	public void start() throws Exception {
 		// //init db
-		final Session session = HibernateUtil.initHibernate(Politic.class);
+		Session session = null;
+		try {
+			session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+		} catch (org.hibernate.HibernateException he) {
+			session = HibernateUtil.getSessionFactory().openSession();
+		}
 		Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
 			// retrieve politics in db
 			PoliticDao politicDao = new PoliticDao(session);
-			politics = politicDao.list(session);
 			// retrieve media in db
-
+			MediaDao mediaDao = new MediaDao(session);
 			session.flush();
 			tx.commit();
 		} finally {

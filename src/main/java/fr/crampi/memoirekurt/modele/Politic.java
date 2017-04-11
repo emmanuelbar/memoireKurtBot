@@ -2,9 +2,17 @@ package fr.crampi.memoirekurt.modele;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * Created by crampi on 08/04/17.
  */
+@Entity
+@Table(name = "Politic")
 public class Politic implements Serializable {
 	/**
 	 * 
@@ -13,11 +21,14 @@ public class Politic implements Serializable {
 	/**
 	 * 
 	 */
+	@Id
+	@GeneratedValue
 	private int id;
+	@Column(name = "firstname")
 	private String firstName;
+	@Column(name = "lastname")
 	private String lastName;
-
-	// enum ?
+	@Column(name = "party")
 	private String party;
 
 	public Politic() {

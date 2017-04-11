@@ -10,7 +10,7 @@ public class Launcher {
 	public static void main(String[] args) throws Exception {
 		Remember remember = new Remember();
 		remember.start();
-		return;
+		System.exit(0);
 	}
 
 }
