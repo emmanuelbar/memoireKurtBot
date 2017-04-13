@@ -1,22 +1,16 @@
 package fr.crampi.memoirekurt.twit;
 
-import java.util.List;
-
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
 import fr.crampi.memoirekurt.dao.MediaDao;
 import fr.crampi.memoirekurt.dao.PoliticDao;
 import fr.crampi.memoirekurt.hibernate.HibernateUtil;
-import fr.crampi.memoirekurt.modele.Media;
-import fr.crampi.memoirekurt.modele.Politic;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import twitter4j.*;
 
 /**
  * Created by crampi on 08/04/17.
  */
 public class Remember {
-	private List<Politic> politics;
-	private List<Media> medias;
 
 	public void start() throws Exception {
 		// //init db
@@ -36,11 +30,32 @@ public class Remember {
 			MediaDao mediaDao = new MediaDao(session);
 			session.flush();
 			tx.commit();
+            // TODO: 13/04/17  search for tweets about politics in major media
+            searchTweets();
+            // // TODO: 13/04/17   reply to said tweets
+            replyToTweets();
+
 		} finally {
 			session.close();
 		}
 	}
-}
-// search for tweets about politics in major media
 
-// reply to said tweets
+    public void searchTweets() {
+        Twitter twitter = TwitterFactory.getSingleton();
+        Query query = new Query("test twitter");
+        QueryResult result = null;
+        try {
+            result = twitter.search(query);
+        } catch (TwitterException e) {
+            e.printStackTrace();
+        }
+        for (Status status : result != null ? result.getTweets() : null) {
+            System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
+        }
+    }
+
+    public void replyToTweets() {
+    }
+}
+
+
