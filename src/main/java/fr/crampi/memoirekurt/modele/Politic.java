@@ -1,12 +1,8 @@
 package fr.crampi.memoirekurt.modele;
 
+import javax.persistence.*;
 import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.Set;
 
 /**
  * Created by crampi on 08/04/17.
@@ -31,8 +27,12 @@ public class Politic implements Serializable {
 	@Column(name = "party")
 	private String party;
 
-	public Politic() {
-		// TODO Auto-generated constructor stub
+    @OneToMany(mappedBy = "politic")
+    private Set<Conviction> convictions;
+
+
+    public Politic() {
+        // TODO Auto-generated constructor stub
 	}
 
 	public Politic(String firstName, String lastName, String party) {
@@ -78,4 +78,12 @@ public class Politic implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
+
+    public Set<Conviction> getConvictions() {
+        return convictions;
+    }
+
+    public void setConvictions(Set<Conviction> convictions) {
+        this.convictions = convictions;
+    }
 }

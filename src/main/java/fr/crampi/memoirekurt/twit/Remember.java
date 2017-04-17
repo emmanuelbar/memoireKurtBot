@@ -1,11 +1,11 @@
 package fr.crampi.memoirekurt.twit;
 
+import fr.crampi.memoirekurt.dao.ConvictionDao;
 import fr.crampi.memoirekurt.dao.MediaDao;
 import fr.crampi.memoirekurt.dao.PoliticDao;
 import fr.crampi.memoirekurt.hibernate.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import twitter4j.*;
 
 /**
  * Created by crampi on 08/04/17.
@@ -28,34 +28,18 @@ public class Remember {
 			PoliticDao politicDao = new PoliticDao(session);
 			// retrieve media in db
 			MediaDao mediaDao = new MediaDao(session);
-			session.flush();
+            //retrieve convictions in db
+            ConvictionDao convictionDao = new ConvictionDao(session);
+            session.flush();
 			tx.commit();
             // TODO: 13/04/17  search for tweets about politics in major media
-            searchTweets();
+            TwitterUtil.searchTweets(politicDao.getPolitics(), mediaDao.getMedias(), convictionDao.getConvictions());
             // // TODO: 13/04/17   reply to said tweets
-            replyToTweets();
 
 		} finally {
 			session.close();
 		}
 	}
-
-    public void searchTweets() {
-        Twitter twitter = TwitterFactory.getSingleton();
-        Query query = new Query("test twitter");
-        QueryResult result = null;
-        try {
-            result = twitter.search(query);
-        } catch (TwitterException e) {
-            e.printStackTrace();
-        }
-        for (Status status : result != null ? result.getTweets() : null) {
-            System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
-        }
-    }
-
-    public void replyToTweets() {
-    }
 }
 
 
