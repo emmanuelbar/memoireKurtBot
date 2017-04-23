@@ -1,9 +1,9 @@
 package fr.crampi.memoirekurt.dao;
 
+import org.hibernate.Session;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.hibernate.Session;
 
 public abstract class AbstractDao<E> {
 	protected Session session;
@@ -36,4 +36,8 @@ public abstract class AbstractDao<E> {
 	public List<E> getList() {
 		return list;
 	}
+
+    public abstract E find(long id);
+
+    public abstract void create(E obj);
 }

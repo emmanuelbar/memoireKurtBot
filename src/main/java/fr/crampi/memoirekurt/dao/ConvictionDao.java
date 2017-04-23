@@ -25,4 +25,14 @@ public class ConvictionDao extends AbstractDao<Conviction> {
         System.out.println("conviction: " + conviction.getLibelle());
         return null;
     }
+
+    @Override
+    public Conviction find(long id) {
+        return null;
+    }
+
+    @Override
+    public void create(Conviction obj) {
+
+    }
 }
