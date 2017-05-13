@@ -17,12 +17,13 @@ import java.util.List;
  */
 public class TwitterUtil {
     private static final Twitter twitter = TwitterFactory.getSingleton();
+    private static Logger logger = Logger.getLogger(TwitterUtil.class);
 
     public static void searchTweets(List<Politic> politics, List<Media> medias, List<Conviction> convictions) {
         for (Politic politic : politics) {
-            System.out.println("Search for tweets about " + politic);
+            logger.info("Search for tweets about " + politic);
             for (Media media : medias) {
-                System.out.println("Search on twitter account: " + media.getTwitterAccount());
+                logger.info("Search on twitter account: " + media.getTwitterAccount());
                 try {
                     List<Status> statuses = twitter.getUserTimeline(media.getTwitterAccount());
                     for (Status status : statuses) {
@@ -39,14 +40,14 @@ public class TwitterUtil {
     }
 
     public static void replyToTweet(Status status, Politic politic) {
-        System.out.println("Replying to tweet id: " + status.getId());
+        logger.debug("Replying to tweet id: " + status.getId());
         //get conviction
         List<Conviction> convictions = new ArrayList<>();
         convictions.addAll(politic.getConvictions());
         if (!hasBeenReplied(status)) {
             //reply with @user
-            String reply = ".@" + status.getUser().getScreenName() + ": pour rappel " + politic.getLastName() + "a été condamné -> " + convictions.get(0).getLibelle();
-            System.out.println("Reply : " + reply);
+            String reply = ".@" + status.getUser().getScreenName() + ": pour rappel " + politic.getLastName() + " a été condamné pour " + convictions.get(0).getLibelle() + ". Source:" + convictions.get(0).getSource();
+            logger.info("Reply : " + reply);
             StatusUpdate statusUpdate = new StatusUpdate(reply);
             statusUpdate.inReplyToStatusId(status.getId());
             try {
@@ -56,7 +57,7 @@ public class TwitterUtil {
                 e.printStackTrace();
             }
         } else {
-            System.out.println("Already responded to id " + status.getId());
+            logger.info("Already responded to id " + status.getId());
         }
 
     }
