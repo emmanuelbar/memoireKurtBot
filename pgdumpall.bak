@@ -1,0 +1,460 @@
+--
+-- PostgreSQL database cluster dump
+--
+
+SET default_transaction_read_only = off;
+
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+
+--
+-- Roles
+--
+
+CREATE ROLE kurt;
+ALTER ROLE kurt WITH NOSUPERUSER INHERIT NOCREATEROLE NOCREATEDB LOGIN NOREPLICATION NOBYPASSRLS PASSWORD 'md57182709b58a41c0a0d19d1a297799bef';
+CREATE ROLE postgres;
+ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION BYPASSRLS;
+
+
+
+
+
+
+--
+-- Database creation
+--
+
+CREATE DATABASE pg_kurtmemoire WITH TEMPLATE = template0 OWNER = kurt;
+REVOKE ALL ON DATABASE template1 FROM PUBLIC;
+REVOKE ALL ON DATABASE template1 FROM postgres;
+GRANT ALL ON DATABASE template1 TO postgres;
+GRANT CONNECT ON DATABASE template1 TO PUBLIC;
+
+
+\connect pg_kurtmemoire
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.5.6
+-- Dumped by pg_dump version 9.5.6
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: kurtmemoire; Type: SCHEMA; Schema: -; Owner: kurt
+--
+
+CREATE SCHEMA kurtmemoire;
+
+
+ALTER SCHEMA kurtmemoire OWNER TO kurt;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = kurtmemoire, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: conviction; Type: TABLE; Schema: kurtmemoire; Owner: kurt
+--
+
+CREATE TABLE conviction (
+    id integer NOT NULL,
+    id_politic integer NOT NULL,
+    libelle text,
+    source text
+);
+
+
+ALTER TABLE conviction OWNER TO kurt;
+
+--
+-- Name: conviction_id_seq; Type: SEQUENCE; Schema: kurtmemoire; Owner: kurt
+--
+
+CREATE SEQUENCE conviction_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE conviction_id_seq OWNER TO kurt;
+
+--
+-- Name: conviction_id_seq; Type: SEQUENCE OWNED BY; Schema: kurtmemoire; Owner: kurt
+--
+
+ALTER SEQUENCE conviction_id_seq OWNED BY conviction.id;
+
+
+--
+-- Name: media; Type: TABLE; Schema: kurtmemoire; Owner: kurt
+--
+
+CREATE TABLE media (
+    id integer NOT NULL,
+    name text NOT NULL,
+    twitteraccount text,
+    CONSTRAINT media_check CHECK ((substr(twitteraccount, 1, 1) = '@'::text))
+);
+
+
+ALTER TABLE media OWNER TO kurt;
+
+--
+-- Name: media_id_seq; Type: SEQUENCE; Schema: kurtmemoire; Owner: kurt
+--
+
+CREATE SEQUENCE media_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE media_id_seq OWNER TO kurt;
+
+--
+-- Name: media_id_seq; Type: SEQUENCE OWNED BY; Schema: kurtmemoire; Owner: kurt
+--
+
+ALTER SEQUENCE media_id_seq OWNED BY media.id;
+
+
+--
+-- Name: politic; Type: TABLE; Schema: kurtmemoire; Owner: kurt
+--
+
+CREATE TABLE politic (
+    id integer NOT NULL,
+    firstname text,
+    lastname text,
+    party text
+);
+
+
+ALTER TABLE politic OWNER TO kurt;
+
+--
+-- Name: politics_id_seq; Type: SEQUENCE; Schema: kurtmemoire; Owner: kurt
+--
+
+CREATE SEQUENCE politics_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE politics_id_seq OWNER TO kurt;
+
+--
+-- Name: politics_id_seq; Type: SEQUENCE OWNED BY; Schema: kurtmemoire; Owner: kurt
+--
+
+ALTER SEQUENCE politics_id_seq OWNED BY politic.id;
+
+
+--
+-- Name: tweet; Type: TABLE; Schema: kurtmemoire; Owner: kurt
+--
+
+CREATE TABLE tweet (
+    id numeric NOT NULL
+);
+
+
+ALTER TABLE tweet OWNER TO kurt;
+
+--
+-- Name: COLUMN tweet.id; Type: COMMENT; Schema: kurtmemoire; Owner: kurt
+--
+
+COMMENT ON COLUMN tweet.id IS 'tweet id already responded to';
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: kurtmemoire; Owner: kurt
+--
+
+ALTER TABLE ONLY conviction ALTER COLUMN id SET DEFAULT nextval('conviction_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: kurtmemoire; Owner: kurt
+--
+
+ALTER TABLE ONLY media ALTER COLUMN id SET DEFAULT nextval('media_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: kurtmemoire; Owner: kurt
+--
+
+ALTER TABLE ONLY politic ALTER COLUMN id SET DEFAULT nextval('politics_id_seq'::regclass);
+
+
+--
+-- Data for Name: conviction; Type: TABLE DATA; Schema: kurtmemoire; Owner: kurt
+--
+
+COPY conviction (id, id_politic, libelle, source) FROM stdin;
+1	2	Mensonge moche	http://www.test.example
+2	3	prise illégale d'intérêt	https://fr.wikipedia.org/wiki/Alain_Jupp%C3%A9#Affaire_des_emplois_fictifs_de_la_mairie_de_Paris
+3	4	prise illégale d'intérêt	https://fr.wikipedia.org/wiki/Patrick_Balkany#Condamnations
+\.
+
+
+--
+-- Name: conviction_id_seq; Type: SEQUENCE SET; Schema: kurtmemoire; Owner: kurt
+--
+
+SELECT pg_catalog.setval('conviction_id_seq', 3, true);
+
+
+--
+-- Data for Name: media; Type: TABLE DATA; Schema: kurtmemoire; Owner: kurt
+--
+
+COPY media (id, name, twitteraccount) FROM stdin;
+1	Le Monde	@lemondefr
+2	Shrampi	@shrampi
+3	20 minutes	@20Minutes
+4	Le Figaro	@Le_Figaro
+5	BFMTV	@BFMTV
+\.
+
+
+--
+-- Name: media_id_seq; Type: SEQUENCE SET; Schema: kurtmemoire; Owner: kurt
+--
+
+SELECT pg_catalog.setval('media_id_seq', 5, true);
+
+
+--
+-- Data for Name: politic; Type: TABLE DATA; Schema: kurtmemoire; Owner: kurt
+--
+
+COPY politic (id, firstname, lastname, party) FROM stdin;
+1	Manuel	AESCHLIMANN	UMP
+2	Pouet	Duvoleur	Lolparty
+3	Alain	Juppé	LR
+4	Patrick	Balkany	LR
+\.
+
+
+--
+-- Name: politics_id_seq; Type: SEQUENCE SET; Schema: kurtmemoire; Owner: kurt
+--
+
+SELECT pg_catalog.setval('politics_id_seq', 4, true);
+
+
+--
+-- Data for Name: tweet; Type: TABLE DATA; Schema: kurtmemoire; Owner: kurt
+--
+
+COPY tweet (id) FROM stdin;
+853905384469389312
+858286195733929984
+863092102267273218
+\.
+
+
+--
+-- Name: conviction_pk; Type: CONSTRAINT; Schema: kurtmemoire; Owner: kurt
+--
+
+ALTER TABLE ONLY conviction
+    ADD CONSTRAINT conviction_pk PRIMARY KEY (id);
+
+
+--
+-- Name: media_pk; Type: CONSTRAINT; Schema: kurtmemoire; Owner: kurt
+--
+
+ALTER TABLE ONLY media
+    ADD CONSTRAINT media_pk PRIMARY KEY (id);
+
+
+--
+-- Name: politic_pk; Type: CONSTRAINT; Schema: kurtmemoire; Owner: kurt
+--
+
+ALTER TABLE ONLY politic
+    ADD CONSTRAINT politic_pk PRIMARY KEY (id);
+
+
+--
+-- Name: tweets_un; Type: CONSTRAINT; Schema: kurtmemoire; Owner: kurt
+--
+
+ALTER TABLE ONLY tweet
+    ADD CONSTRAINT tweets_un UNIQUE (id);
+
+
+--
+-- Name: conviction_politic_fk; Type: FK CONSTRAINT; Schema: kurtmemoire; Owner: kurt
+--
+
+ALTER TABLE ONLY conviction
+    ADD CONSTRAINT conviction_politic_fk FOREIGN KEY (id_politic) REFERENCES politic(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect postgres
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.5.6
+-- Dumped by pg_dump version 9.5.6
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: postgres; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON DATABASE postgres IS 'default administrative connection database';
+
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\connect template1
+
+SET default_transaction_read_only = off;
+
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.5.6
+-- Dumped by pg_dump version 9.5.6
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: template1; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON DATABASE template1 IS 'default template for new databases';
+
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+--
+-- PostgreSQL database cluster dump complete
+--
+
