@@ -46,7 +46,7 @@ public class TwitterUtil {
         convictions.addAll(politic.getConvictions());
         if (!hasBeenReplied(status)) {
             //reply with @user
-            String reply = ".@" + status.getUser().getScreenName() + ": pour rappel " + politic.getLastName() + " a été condamné pour " + convictions.get(0).getLibelle() + ". Source:" + convictions.get(0).getSource();
+            String reply = "@" + status.getUser().getScreenName() + " Pour rappel " + politic.getLastName() + " a été condamné pour " + convictions.get(0).getLibelle() + ". Source:" + convictions.get(0).getSource();
             logger.info("Reply : " + reply);
             StatusUpdate statusUpdate = new StatusUpdate(reply);
             statusUpdate.inReplyToStatusId(status.getId());
