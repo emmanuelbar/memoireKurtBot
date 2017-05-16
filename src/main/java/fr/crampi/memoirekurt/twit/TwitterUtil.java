@@ -27,7 +27,7 @@ public class TwitterUtil {
                 try {
                     List<Status> statuses = twitter.getUserTimeline(media.getTwitterAccount());
                     for (Status status : statuses) {
-                        if (status.getText().contains(politic.getLastName())) {
+                        if (status.getText().contains(politic.getLastName()) && status.getText().contains(politic.getFirstName())) {
                             // tweet found about the politic now we need to reply to said tweet
                             replyToTweet(status, politic);
                         }
@@ -46,7 +46,7 @@ public class TwitterUtil {
         convictions.addAll(politic.getConvictions());
         if (!hasBeenReplied(status)) {
             //reply with @user
-            String reply = "@" + status.getUser().getScreenName() + " Pour rappel " + politic.getLastName() + " a été condamné pour " + convictions.get(0).getLibelle() + ". Source:" + convictions.get(0).getSource();
+            String reply = "@" + status.getUser().getScreenName() + " Pour rappel " + politic.getFirstName() + " " + politic.getLastName() + " a été condamné pour " + convictions.get(0).getLibelle() + ". Source:" + convictions.get(0).getSource();
             logger.info("Reply : " + reply);
             StatusUpdate statusUpdate = new StatusUpdate(reply);
             statusUpdate.inReplyToStatusId(status.getId());
