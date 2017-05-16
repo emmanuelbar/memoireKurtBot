@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * Created by crampi on 23/04/17.
+ * Created on 23/04/17.
  */
 @Entity
 @Table(name = "tweet")

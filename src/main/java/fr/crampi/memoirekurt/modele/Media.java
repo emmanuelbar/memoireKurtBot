@@ -1,17 +1,9 @@
 package fr.crampi.memoirekurt.modele;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
-/**
- * @author crampi
- *
- */
 @Entity
 @Table(name = "media")
 public class Media implements Serializable {

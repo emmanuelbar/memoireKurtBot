@@ -7,7 +7,7 @@ import org.hibernate.Session;
 import java.util.List;
 
 /**
- * Created by crampi on 17/04/17.
+ * Created on 17/04/17.
  */
 public class ConvictionDao extends AbstractDao<Conviction> {
     private List<Conviction> convictions;

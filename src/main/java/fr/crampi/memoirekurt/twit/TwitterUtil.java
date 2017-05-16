@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by crampi on 16/04/17.
+ * Created on 16/04/17.
  */
 public class TwitterUtil {
     private static final Twitter twitter = TwitterFactory.getSingleton();

@@ -3,7 +3,7 @@ package fr.crampi.memoirekurt.modele;
 import javax.persistence.*;
 
 /**
- * Created by crampi on 08/04/17.
+ * Created on 08/04/17.
  */
 @Entity
 @Table(name = "conviction")

@@ -6,7 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 /**
- * Created by crampi on 23/04/17.
+ * Created on 23/04/17.
  */
 public class TweetDao extends AbstractDao<Tweet> {
     public TweetDao(Session session) {

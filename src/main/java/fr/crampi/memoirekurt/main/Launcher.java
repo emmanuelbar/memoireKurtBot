@@ -3,7 +3,7 @@ package fr.crampi.memoirekurt.main;
 import fr.crampi.memoirekurt.twit.Remember;
 
 /**
- * Created by crampi on 08/04/17.
+ * Created  on 08/04/17.
  */
 public class Launcher {
 

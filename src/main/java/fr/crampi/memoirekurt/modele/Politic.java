@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 /**
- * Created by crampi on 08/04/17.
+ * Created on 08/04/17.
  */
 @Entity
 @Table(name = "Politic")

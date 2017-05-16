@@ -8,7 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 /**
- * Created by crampi on 08/04/17.
+ * Created on 08/04/17.
  */
 public class Remember {
 

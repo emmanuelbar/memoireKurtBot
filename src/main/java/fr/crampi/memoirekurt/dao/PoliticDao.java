@@ -6,7 +6,7 @@ import org.hibernate.Session;
 import java.util.List;
 
 /**
- * Created by crampi on 08/04/17.
+ * Created on 08/04/17.
  *
  */
 public class PoliticDao extends AbstractDao<Politic> {
